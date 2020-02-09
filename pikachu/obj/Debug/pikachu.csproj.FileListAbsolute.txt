@@ -1,0 +1,15 @@
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\pikachu.exe.config
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\pikachu.exe
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\pikachu.pdb
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.csprojAssemblyReference.cache
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.Properties.Resources.resources
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.csproj.GenerateResource.cache
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.csproj.CoreCompileInputs.cache
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.exe
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.pdb
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.Form1.resources
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\WebDriver.dll
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\WebDriver.Support.dll
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\WebDriver.xml
+C:\Users\Dell\source\repos\pikachu\pikachu\bin\Debug\WebDriver.Support.xml
+C:\Users\Dell\source\repos\pikachu\pikachu\obj\Debug\pikachu.csproj.CopyComplete
