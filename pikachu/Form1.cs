@@ -34,22 +34,12 @@ namespace pikachu
         }
         private void Run()
         {
-            //string[] input = File.ReadAllLines(@"C:\Users\Dell\Desktop\pikachu.txt");
-            //arr = new int[input.Length, input.Length];
-            //for (int i = 0; i < input.Length; i++)
-            //{
-            //    string[] temp = input[i].Split(' ');
-            //    for (int j = 0; j < temp.Length; j++)
-            //    {
-            //        int type = int.Parse(temp[j]);
-            //        arr[j, i] = type;
-            //    }
-            //}
+
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("--disable-notifications"); // to disable notification
             var driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl("http://gamehaynhat.com.vn/webgl/0/18/?gid=18");
-            //MessageBox.Show("hihi");
+
 
 
 
@@ -57,9 +47,9 @@ namespace pikachu
             int x = 1;
             int y = 1;
 
-            //SET TRUC NGANG
+            //khởi tạo giá trị mặc định cho 4 viền
             for (int i = 0; i < SIZE_X + 2; i++)
-            {               
+            {
                 arr[i, 0] = 0;
                 arr[i, SIZE_Y + 1] = 0;
             }
@@ -68,12 +58,16 @@ namespace pikachu
                 arr[0, i] = 0;
                 arr[SIZE_X + 1, i] = 0;
             }
+
+
             dynamic children;
+
+            //hàm này đọc rồi ấn vào mảng
             children = ReadArr(driver);
 
-           
 
-            
+
+
             while (true)
             {
                 for (int i = 1; i < SIZE_X + 1; i++)
@@ -82,20 +76,19 @@ namespace pikachu
                     {
                         try
                         {
+                            //thằng này để lưu điểm có thể chơi vs thằng i x j
+                            res = new List<Point>();
 
-                       
-                        res = new List<Point>();
+                            CanTry(new Point(i, j), arr[i, j], -1, 0, "");
+                            if (res.Count == 0) continue;
 
-                        CanTry(new Point(i, j), arr[i, j], -1, 0, "");
-                        if (res.Count == 0) continue;
+                            children[indexEle[i, j]].Click();
+                            Thread.Sleep(50);
+                            children[indexEle[res[0].X, res[0].Y]].Click();
 
-                        children[indexEle[i, j]].Click();
-                        Thread.Sleep(50);
-                        children[indexEle[res[0].X, res[0].Y]].Click();
-
-                        arr[i, j] = 0;
-                        arr[res[0].X, res[0].Y] = 0;
-                        Thread.Sleep(300);
+                            arr[i, j] = 0;
+                            arr[res[0].X, res[0].Y] = 0;
+                            Thread.Sleep(300);
                         }
                         catch (Exception ex)
                         {
@@ -107,18 +100,19 @@ namespace pikachu
                 }
                 try
                 {
+                    //nó có thông báo k có con pika long nào giống nhau :(
                     driver.SwitchTo().Alert().Accept();
-                    Console.WriteLine("found element");
                     children = ReadArr(driver);
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("not found element");
+                    Console.WriteLine("không thấy thông báo");
+
                 }
 
                 ;
             }
-            
+
 
 
         }
@@ -133,12 +127,10 @@ namespace pikachu
 
 
                 string visibility = children[i].GetCssValue("visibility");
-                //string html = children[i].GetAttribute("innerHTML");
                 string src = children[i].FindElement(By.TagName("img")).GetAttribute("src");
                 string idImg = Regex.Match(src, @"pieces(.*?)\.png").Groups[1].Value;
                 arr[x, y] = visibility == "visible" ? int.Parse(idImg) : 0;
                 //Console.WriteLine($"{x} x {y} = {arr[x, y]}");
-
 
                 y++;
                 if (y > SIZE_Y)
@@ -156,27 +148,22 @@ namespace pikachu
             {
                 for (int j = 0; j < SIZE_X + 2; j++)
                 {
-                    Console.Write(arr[j,i].ToString() + " ");
+                    Console.Write(arr[j, i].ToString() + " ");
                 }
                 Console.WriteLine();
             }
         }
         void CanTry(Point locationNow, int type, int direction, int countDirection, string trace)
         {
-            //nếu countDirction >=4 break false;
-            //nếu type == type now && countDirec<4 break true
+            //ý tưởng là quét hết các đường đi. điều kiện đúng là kẻ ít hơn 4 đường thẳng.
+            //
 
-            if (locationNow.X >= SIZE_X+2 || locationNow.Y >= SIZE_Y+2) return;
+            if (locationNow.X >= SIZE_X + 2 || locationNow.Y >= SIZE_Y + 2) return;
             if (type == 0) return;
 
             string[] x = new string[] { "tren", "duoi", "phai", "trai" };
-
             trace += ", " + ((direction == -1) ? "" : x[direction]) + $" {locationNow}";
-            //Console.WriteLine(trace);
-            if (trace == ",  {X=1,Y=1}, tren {X=1,Y=0}, phai {X=2,Y=0}, phai {X=3,Y=0}, phai {X=4,Y=0}, duoi {X=4,Y=1}")
-            {
-                ;
-            }
+           
             if (type == GetType(locationNow) && countDirection < 4 && countDirection > 0)
             {
                 trace += $" => OK";
